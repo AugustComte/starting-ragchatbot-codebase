@@ -90,6 +90,27 @@ async def get_course_stats():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+class ClearSessionRequest(BaseModel):
+    """Request model for clearing a session"""
+    session_id: str
+
+class ClearSessionResponse(BaseModel):
+    """Response model for session clear confirmation"""
+    success: bool
+    message: str
+
+@app.post("/api/clear-session", response_model=ClearSessionResponse)
+async def clear_session(request: ClearSessionRequest):
+    """Clear a conversation session from memory"""
+    try:
+        rag_system.session_manager.clear_session(request.session_id)
+        return ClearSessionResponse(
+            success=True,
+            message=f"Session {request.session_id} cleared"
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.on_event("startup")
 async def startup_event():
     """Load initial documents on startup"""

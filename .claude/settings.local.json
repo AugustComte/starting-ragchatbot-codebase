@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(claude mcp --help:*)",
+      "Bash(claude mcp add:*)",
+      "Bash(claude mcp list)",
+      "Bash(npx @playwright/mcp@latest --help:*)",
+      "Bash(cmd /c \"npx @playwright/mcp@latest --help\")",
+      "Bash(claude mcp get:*)",
+      "Bash(cmd /c \"where npx\")",
+      "Bash(cmd /c \"where node\")",
+      "Bash(./run.sh)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_evaluate",
+      "mcp__playwright__browser_type",
+      "mcp__playwright__browser_wait_for",
+      "mcp__playwright__browser_click",
+      "Bash(curl:*)",
+      "Bash(uv run python:*)",
+      "Bash(netstat:*)",
+      "Bash(taskkill:*)",
+      "Bash(python -m json.tool:*)"
+    ]
+  }
+}
