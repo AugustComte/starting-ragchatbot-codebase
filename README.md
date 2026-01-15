@@ -54,3 +54,22 @@ The application will be available at:
 - Web Interface: `http://localhost:8000`
 - API Documentation: `http://localhost:8000/docs`
 
+### Stopping the Server
+
+To close the server running on port 8000:
+
+**Option 1: Batch file (Command Prompt)**
+```cmd
+.\server_close.bat
+```
+Or double-click `server_close.bat` in File Explorer.
+
+**Option 2: PowerShell**
+```powershell
+.\server_close.ps1
+```
+If you get an execution policy error, run:
+```powershell
+powershell -ExecutionPolicy Bypass -File server_close.ps1
+```
+
