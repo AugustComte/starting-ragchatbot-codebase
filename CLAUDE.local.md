@@ -4,10 +4,9 @@ This file contains local development notes and preferences that should not be co
 
 ## Local Environment
 
-- This is a personal repo following along with the DeepLearning.ai Claude Code course
-- Origin remote points to the course repo - DO NOT push to origin
-- Commits stay local on the main branch
-- If asked to push, decline or confirm with user first
+- This is a personal fork following along with the DeepLearning.ai Claude Code course
+- Origin remote points to the user's fork - safe to push
+- Upstream is the original course repo - DO NOT push to upstream
 
 ## Personal Preferences
 
