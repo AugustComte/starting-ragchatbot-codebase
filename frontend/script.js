@@ -1,6 +1,37 @@
 // API base URL - use relative path to work from any host
 const API_URL = '/api';
 
+// Theme Management
+function initTheme() {
+    const saved = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = saved || (prefersDark ? 'dark' : 'light');
+    applyTheme(theme);
+}
+
+function applyTheme(theme) {
+    if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+    }
+    const btn = document.getElementById('themeToggle');
+    if (btn) {
+        const label = theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme';
+        btn.setAttribute('aria-label', label);
+        btn.setAttribute('title', label);
+    }
+    localStorage.setItem('theme', theme);
+}
+
+function toggleTheme() {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    applyTheme(isLight ? 'dark' : 'light');
+}
+
+// Initialize theme immediately (before DOMContentLoaded) to avoid flash
+initTheme();
+
 // Global state
 let currentSessionId = null;
 
@@ -24,6 +55,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Event Listeners
 function setupEventListeners() {
+  // Theme toggle
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', toggleTheme);
+  }
+
   // Chat functionality
   sendButton.addEventListener('click', sendMessage);
   chatInput.addEventListener('keypress', (e) => {

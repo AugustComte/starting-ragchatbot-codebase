@@ -26,6 +26,135 @@
   --welcome-border: #2563eb;
 }
 
+/* Light Theme Variables */
+[data-theme="light"] .message-content code {
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .message-content pre {
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] {
+    /* Backgrounds */
+    --background: #f8fafc;
+    --surface: #ffffff;
+    --surface-hover: #e2e8f0;
+
+    /* Text — both pass WCAG AA on --background */
+    --text-primary: #1e293b;    /* contrast ~13:1 on #f8fafc */
+    --text-secondary: #475569;  /* contrast ~5.9:1 on #f8fafc (up from 64748b ~4.9:1) */
+
+    /* Borders & shadows */
+    --border-color: #cbd5e1;    /* slightly darker than #e2e8f0 for visible separation */
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+
+    /* Primary — unchanged; #2563eb on #fff is ~7.3:1, passes WCAG AA/AAA */
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+
+    /* Messages */
+    --user-message: #2563eb;
+    --assistant-message: #f1f5f9;
+
+    /* Focus ring — slightly stronger for light backgrounds */
+    --focus-ring: rgba(37, 99, 235, 0.25);
+
+    /* Welcome card */
+    --welcome-bg: #eff6ff;
+    --welcome-border: #93c5fd;
+}
+
+/* Light theme: fix hardcoded dark-mode source link colors */
+[data-theme="light"] .sources-content a {
+    color: #1d4ed8; /* contrast ~5.4:1 on #f1f5f9 assistant bubble */
+}
+
+[data-theme="light"] .sources-content a:hover {
+    color: #1e40af;
+}
+
+/* Light theme: fix hardcoded dark-mode error/success colors */
+[data-theme="light"] .error-message {
+    background: rgba(220, 38, 38, 0.07);
+    color: #b91c1c; /* contrast ~5.8:1 on light red bg */
+    border-color: rgba(220, 38, 38, 0.18);
+}
+
+[data-theme="light"] .success-message {
+    background: rgba(22, 163, 74, 0.07);
+    color: #15803d; /* contrast ~5.1:1 on light green bg */
+    border-color: rgba(22, 163, 74, 0.18);
+}
+
+/* Theme Transition */
+body,
+.sidebar,
+.chat-main,
+.chat-container,
+.chat-messages,
+.chat-input-container,
+.main-content,
+.message-content,
+.stat-item,
+.suggested-item,
+#chatInput,
+#themeToggle {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Theme Toggle Button */
+#themeToggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background: var(--surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+#themeToggle:hover {
+    background: var(--surface-hover);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+#themeToggle:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--focus-ring);
+    border-color: var(--primary-color);
+}
+
+#themeToggle:active {
+    transform: scale(0.92);
+}
+
+/* Show sun in dark mode (clicking switches to light), moon in light mode */
+#themeToggle .icon-sun {
+    display: block;
+}
+
+#themeToggle .icon-moon {
+    display: none;
+}
+
+[data-theme="light"] #themeToggle .icon-sun {
+    display: none;
+}
+
+[data-theme="light"] #themeToggle .icon-moon {
+    display: block;
+}
+
 /* Base Styles */
 body {
   font-family:
