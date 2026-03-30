@@ -23,7 +23,12 @@
       "Bash(uv run python:*)",
       "Bash(netstat:*)",
       "Bash(taskkill:*)",
-      "Bash(python -m json.tool:*)"
+      "Bash(python -m json.tool:*)",
+      "Bash(uv run uvicorn:*)",
+      "Bash(findstr:*)",
+      "Bash(uv pip:*)",
+      "Bash(uv sync:*)",
+      "Bash(uv run pytest:*)"
     ]
   }
 }

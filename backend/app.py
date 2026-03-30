@@ -66,10 +66,10 @@ async def query_documents(request: QueryRequest):
         session_id = request.session_id
         if not session_id:
             session_id = rag_system.session_manager.create_session()
-        
+
         # Process query using RAG system
         answer, sources = rag_system.query(request.query, session_id)
-        
+
         return QueryResponse(
             answer=answer,
             sources=[Source(**s) if isinstance(s, dict) else Source(text=s) for s in sources],
