@@ -8,22 +8,23 @@
 }
 
 /* CSS Variables */
+/* Okabe-Ito palette: #000000 #E69F00 #56B4E9 #009E73 #F0E442 #0072B2 #D55E00 #CC79A7 */
 :root {
-  --primary-color: #2563eb;
-  --primary-hover: #1d4ed8;
+  --primary-color: #0072B2;
+  --primary-hover: #005a8e;
   --background: #0f172a;
   --surface: #1e293b;
   --surface-hover: #334155;
   --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
   --border-color: #334155;
-  --user-message: #2563eb;
+  --user-message: #0072B2;
   --assistant-message: #374151;
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
   --radius: 12px;
-  --focus-ring: rgba(37, 99, 235, 0.2);
+  --focus-ring: rgba(0, 114, 178, 0.2);
   --welcome-bg: #1e3a5f;
-  --welcome-border: #2563eb;
+  --welcome-border: #0072B2;
 }
 
 /* Light Theme Variables */
@@ -49,29 +50,29 @@
     --border-color: #cbd5e1;    /* slightly darker than #e2e8f0 for visible separation */
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
 
-    /* Primary — unchanged; #2563eb on #fff is ~7.3:1, passes WCAG AA/AAA */
-    --primary-color: #2563eb;
-    --primary-hover: #1d4ed8;
+    /* Primary — Okabe-Ito Blue #0072B2 on #fff is ~4.6:1, passes WCAG AA */
+    --primary-color: #0072B2;
+    --primary-hover: #005a8e;
 
     /* Messages */
-    --user-message: #2563eb;
+    --user-message: #0072B2;
     --assistant-message: #f1f5f9;
 
     /* Focus ring — slightly stronger for light backgrounds */
-    --focus-ring: rgba(37, 99, 235, 0.25);
+    --focus-ring: rgba(0, 114, 178, 0.25);
 
     /* Welcome card */
-    --welcome-bg: #eff6ff;
-    --welcome-border: #93c5fd;
+    --welcome-bg: #e8f4fb;
+    --welcome-border: #56B4E9;
 }
 
 /* Light theme: fix hardcoded dark-mode source link colors */
 [data-theme="light"] .sources-content a {
-    color: #1d4ed8; /* contrast ~5.4:1 on #f1f5f9 assistant bubble */
+    color: #0072B2; /* Okabe-Ito Blue */
 }
 
 [data-theme="light"] .sources-content a:hover {
-    color: #1e40af;
+    color: #005a8e;
 }
 
 /* Light theme: fix hardcoded dark-mode error/success colors */
@@ -178,15 +179,18 @@ body {
   padding: 0;
 }
 
-/* Header - Hidden */
+/* Header */
 header {
-  display: none;
+  padding: 1rem 2rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
 }
 
 header h1 {
   font-size: 1.75rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #E69F00 0%, #0072B2 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
