@@ -326,6 +326,103 @@ def test_config():
 # Tool Manager Fixtures
 # ============================================
 
+# ============================================
+# API / TestClient Fixtures
+# ============================================
+
+@pytest.fixture
+def mock_rag_system():
+    """Mock RAGSystem for API endpoint testing"""
+    mock = MagicMock()
+    mock.session_manager.create_session.return_value = "test-session-123"
+    mock.query.return_value = (
+        "Based on the course content, MCP stands for Model Context Protocol.",
+        [{"text": "MCP Introduction Course - Lesson 1", "link": "https://example.com/mcp-course/lesson-1"}],
+    )
+    mock.get_course_analytics.return_value = {
+        "total_courses": 2,
+        "course_titles": ["MCP Introduction Course", "FastAPI Basics"],
+    }
+    mock.session_manager.clear_session.return_value = None
+    return mock
+
+
+@pytest.fixture
+def test_client(mock_rag_system):
+    """
+    FastAPI TestClient with a minimal app that mirrors app.py routes but
+    uses mock_rag_system and has no static-file mount (avoids missing
+    ../frontend directory in CI / test environments).
+    """
+    from fastapi import FastAPI, HTTPException
+    from fastapi.testclient import TestClient
+    from pydantic import BaseModel
+    from typing import List, Optional
+
+    _app = FastAPI(title="Test RAG App")
+
+    class _QueryRequest(BaseModel):
+        query: str
+        session_id: Optional[str] = None
+
+    class _Source(BaseModel):
+        text: str
+        link: Optional[str] = None
+
+    class _QueryResponse(BaseModel):
+        answer: str
+        sources: List[_Source]
+        session_id: str
+
+    class _CourseStats(BaseModel):
+        total_courses: int
+        course_titles: List[str]
+
+    class _ClearSessionRequest(BaseModel):
+        session_id: str
+
+    class _ClearSessionResponse(BaseModel):
+        success: bool
+        message: str
+
+    @_app.post("/api/query", response_model=_QueryResponse)
+    async def _query_documents(request: _QueryRequest):
+        try:
+            session_id = request.session_id or mock_rag_system.session_manager.create_session()
+            answer, sources = mock_rag_system.query(request.query, session_id)
+            return _QueryResponse(
+                answer=answer,
+                sources=[_Source(**s) if isinstance(s, dict) else _Source(text=s) for s in sources],
+                session_id=session_id,
+            )
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+
+    @_app.get("/api/courses", response_model=_CourseStats)
+    async def _get_course_stats():
+        try:
+            analytics = mock_rag_system.get_course_analytics()
+            return _CourseStats(
+                total_courses=analytics["total_courses"],
+                course_titles=analytics["course_titles"],
+            )
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+
+    @_app.post("/api/clear-session", response_model=_ClearSessionResponse)
+    async def _clear_session(request: _ClearSessionRequest):
+        try:
+            mock_rag_system.session_manager.clear_session(request.session_id)
+            return _ClearSessionResponse(
+                success=True,
+                message=f"Session {request.session_id} cleared",
+            )
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+
+    return TestClient(_app)
+
+
 @pytest.fixture
 def mock_tool_manager():
     """Mock ToolManager for testing"""
